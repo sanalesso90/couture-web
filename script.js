@@ -1,27 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Lenis smooth scrolling
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-        infinite: false,
-    });
-
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     // Carousel functionality
     const carouselItems = document.querySelectorAll('.carousel-item');
-    const parallaxContainer = document.querySelector('.parallax-container');
     let currentItem = 0;
     let isTransitioning = false;
 
@@ -50,10 +29,35 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(showNextItem, 5000); // Change image every 5 seconds
 
     // Parallax effect
-    lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
-        const val = scroll * 0.5;
+    const parallaxContainer = document.querySelector('.parallax-container');
+    
+    function handleParallax() {
+        const scrolled = window.pageYOffset;
+        const val = scrolled * 0.5;
         parallaxContainer.style.transform = `translate3d(0, ${val}px, 0)`;
+    }
+
+    window.addEventListener('scroll', handleParallax);
+
+    // Smooth scrolling with Lenis
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
     });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
 
     // Burger menu functionality
     const burger = document.querySelector('.burger');
@@ -75,5 +79,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Burger Animation
         burger.classList.toggle('toggle');
+    });
+
+    // Virtual Try-On functionality
+    const modelImage = document.querySelector('.model-image');
+    const garmentOverlay = document.querySelector('.garment-overlay');
+    const designOptions = document.querySelectorAll('.design-option');
+
+    designOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const designImage = this.querySelector('img').src;
+            
+            // Animate the model image
+            modelImage.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                modelImage.style.transform = 'scale(1)';
+            }, 500);
+
+            // Change the garment overlay
+            garmentOverlay.style.opacity = '0';
+            setTimeout(() => {
+                garmentOverlay.style.backgroundImage = `url(${designImage})`;
+                garmentOverlay.style.opacity = '1';
+            }, 250);
+
+            // Highlight the selected design
+            designOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+
+    // Smooth scroll to anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                lenis.scrollTo(targetElement);
+            }
+        });
+    });
+
+    // Intersection Observer for fade-in animations
+    const faders = document.querySelectorAll('.fade-in');
+    const sliders = document.querySelectorAll('.slide-in');
+
+    const appearOptions = {
+        threshold: 0,
+        rootMargin: "0px 0px -100px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(
+        entries,
+        appearOnScroll
+    ) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                return;
+            } else {
+                entry.target.classList.add('appear');
+                appearOnScroll.unobserve(entry.target);
+            }
+        });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+    });
+
+    sliders.forEach(slider => {
+        appearOnScroll.observe(slider);
     });
 });

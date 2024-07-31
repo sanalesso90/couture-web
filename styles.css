@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
 body {
     font-family: 'Cormorant Garamond', serif;
 }
@@ -105,12 +109,18 @@ nav:hover {
 }
 
 .hero {
-    height: 90vh;
-    height: 90dvh;
-    margin-top: 10vh;
-    margin-top: 10dvh;
+    height: 100vh;
     position: relative;
     overflow: hidden;
+}
+
+.parallax-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
 }
 
 .carousel {
@@ -126,16 +136,52 @@ nav:hover {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .carousel-item.active {
     opacity: 1;
     transform: scale(1);
+}
+
+.carousel-item.next {
+    opacity: 1;
+}
+
+.parallax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 10;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-family: 'Bodoni Moda', serif;
+    color: rgba(255, 255, 255, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
 }
 
 .burger {
@@ -149,6 +195,11 @@ nav:hover {
     background-color: #333;
     margin: 5px;
     transition: all 0.3s ease;
+}
+
+.test {
+    width: 100%;
+    height: 100vh;
 }
 
 @media (max-width: 768px) {
@@ -239,43 +290,4 @@ nav:hover {
 
 .toggle .line3 {
     transform: rotate(45deg) translate(-5px,-6px);
-}
-
-/* ... (previous styles remain unchanged) ... */
-
-.carousel {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-.carousel-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform: scale(1.1);
-}
-
-.carousel-item.active {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.carousel-item.next {
-    opacity: 1;
-}
-
-/* ... (rest of the styles remain unchanged) ... */
-
-.test{
-    width: 100%;
-    height: 100vh;
 }

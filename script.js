@@ -1,5 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Lenis smooth scrolling
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Carousel functionality
     const carouselItems = document.querySelectorAll('.carousel-item');
+    const parallaxContainer = document.querySelector('.parallax-container');
     let currentItem = 0;
     let isTransitioning = false;
 
@@ -25,7 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 50);
     }
 
-    setInterval(showNextItem, 4000); // Change image every 5 seconds
+    setInterval(showNextItem, 5000); // Change image every 5 seconds
+
+    // Parallax effect
+    lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+        const val = scroll * 0.5;
+        parallaxContainer.style.transform = `translate3d(0, ${val}px, 0)`;
+    });
 
     // Burger menu functionality
     const burger = document.querySelector('.burger');

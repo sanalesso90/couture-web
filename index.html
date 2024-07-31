@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haute Couture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
 </head>
@@ -11,7 +13,7 @@
     <nav>
         <div class="logo">Haute Couture</div>
         <ul class="nav-links">
-            <li><a href="#" data-replace="Collections"><span>Collections</span></a></li>
+            <li><a href="#collections" data-replace="Collections"><span>Collections</span></a></li>
             <li><a href="#" data-replace="Runway"><span>Runway</span></a></li>
             <li><a href="#" data-replace="About"><span>About</span></a></li>
             <li><a href="#" data-replace="Testimonials"><span>Testimonials</span></a></li>
@@ -38,67 +40,119 @@
         </div>
     </section>
   
-        <section class="featured-collections" id="collections">
-            <div class="container">
-                <h2 class="section-title" data-text="Featured Collections"><span>Featured Collections</span></h2>
-                <div class="collections-grid">
-                    <div class="collection-item">
-                        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Ethereal Elegance Collection" class="collection-image">
-                        <div class="collection-info">
-                            <h3 class="collection-title">Ethereal Elegance</h3>
-                            <p class="collection-description">Delicate fabrics and flowing silhouettes inspired by the gentle movement of clouds.</p>
-                            <a href="#" class="collection-link">Explore</a>
-                        </div>
+    <section class="featured-collections" id="collections">
+        <div class="container">
+            <h2 class="section-title" data-text="Featured Collections"><span>Featured Collections</span></h2>
+            <div class="collections-grid">
+                <div class="collection-item">
+                    <img src="./img/test1.jpg" alt="Ethereal Elegance Collection" class="collection-image">
+                    <div class="collection-info">
+                        <h3 class="collection-title">Ethereal Elegance</h3>
+                        <p class="collection-description">Delicate fabrics and flowing silhouettes inspired by the gentle movement of clouds.</p>
+                        <a href="#" class="collection-link">Explore</a>
                     </div>
-                    <div class="collection-item">
-                        <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=783&q=80" alt="Noir Mystique Collection" class="collection-image">
-                        <div class="collection-info">
-                            <h3 class="collection-title">Noir Mystique</h3>
-                            <p class="collection-description">Bold, dramatic pieces that embody the allure of the night and the unknown.</p>
-                            <a href="#" class="collection-link">Discover</a>
-                        </div>
+                </div>
+                <div class="collection-item">
+                    <img src="./img/6.jpg" alt="Noir Mystique Collection" class="collection-image">
+                    <div class="collection-info">
+                        <h3 class="collection-title">Noir Mystique</h3>
+                        <p class="collection-description">Bold, dramatic pieces that embody the allure of the night and the unknown.</p>
+                        <a href="#" class="collection-link">Discover</a>
                     </div>
-                    <div class="collection-item">
-                        <img src="./img/6.jpg"Botanical Dreams Collection" class="collection-image">
-                        <div class="collection-info">
-                            <h3 class="collection-title">Botanical Dreams</h3>
-                            <p class="collection-description">Nature-inspired designs featuring intricate floral patterns and organic textures.</p>
-                            <a href="#" class="collection-link">View</a>
+                </div>
+                <div class="collection-item">
+                    <img src="./img/test2.jpg" alt="Botanical Dreams Collection" class="collection-image">
+                    <div class="collection-info">
+                        <h3 class="collection-title">Botanical Dreams</h3>
+                        <p class="collection-description">Nature-inspired designs featuring intricate floral patterns and organic textures.</p>
+                        <a href="#" class="collection-link">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="virtual-try-on">
+    <div class="parallax-background"></div>
+    <div class="container">
+        <h2 class="section-title">Virtual Haute Couture Experience</h2>
+        <div class="try-on-container">
+            <div id="curve" class="card model-container">
+                <img src="./img/1.jpg" alt="Model" class="model-image">
+                <div class="garment-overlay"></div>
+                <div class="card-blur"></div>
+                <div class="footer">
+                    <div class="wave"></div>
+                    <div class="content">
+                        <div class="connections">
+                            <a href="#" class="connection facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="connection twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="connection instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                        <div class="info">
+                            <div class="name">Ethereal Elegance</div>
+                            <div class="job">Haute Couture Gown</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="virtual-try-on" id="virtual-try-on">
-            <div class="container">
-                <h2 class="section-title">Virtual Try-On Experience</h2>
-                <div class="try-on-container">
-                    <div class="model-container">
-                        <img src="./img/1.jpg" alt="Model" class="model-image">
-                        <div class="garment-overlay"></div>
+            <div class="controls-container">
+                <h3>Explore Our Designs</h3>
+                <div class="design-selector">
+                    <div class="design-option" data-design="design1">
+                        <img src="./img/1.jpg" alt="Ethereal Gown">
+                        <span>Ethereal Gown</span>
                     </div>
-                    <div class="controls-container">
-                        <h3>Select a Design</h3>
-                        <div class="design-selector">
-                            <div class="design-option" data-design="design1">
-                                <img src="./img/1.jpg" alt="Ethereal Gown">
-                                <span>Ethereal Gown</span>
-                            </div>
-                            <div class="design-option" data-design="design2">
-                                <img src="./img/upscale.jpg" alt="Noir Mystique">
-                                <span>Noir Mystique</span>
-                            </div>
-                            <div class="design-option" data-design="design3">
-                                <img src="./img/h3.jpg" alt="Floral Dream">
-                                <span>Floral Dream</span>
-                            </div>
-                        </div>
-
+                    <div class="design-option" data-design="design2">
+                        <img src="./img/upscale.jpg" alt="Noir Mystique">
+                        <span>Noir Mystique</span>
+                    </div>
+                    <div class="design-option" data-design="design3">
+                        <img src="./img/h3.jpg" alt="Floral Dream">
+                        <span>Floral Dream</span>
                     </div>
                 </div>
             </div>
-        </section>
-
+        </div>
+    </div>
+</section>
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Voices of Elegance: Our Clients Speak</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-image">
+                        <img src="./img/testimonial1.jpg" alt="Sarah Johnson">
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="quote">"The Ethereal Elegance collection is absolutely stunning! I felt like a goddess wearing one of their gowns."</p>
+                        <p class="client-name">Sarah Johnson</p>
+                        <p class="client-title">Fashion Enthusiast</p>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-image">
+                        <img src="./img/testimonial2.jpg" alt="Emily Chen">
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="quote">"Noir Mystique is my go-to for evening wear. The pieces are bold, dramatic, and make a statement."</p>
+                        <p class="client-name">Emily Chen</p>
+                        <p class="client-title">Celebrity Stylist</p>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-image">
+                        <img src="./img/testimonial3.jpg" alt="David Rodriguez">
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="quote">"I absolutely love the Botanical Dreams collection. Each piece feels like a work of art."</p>
+                        <p class="client-name">David Rodriguez</p>
+                        <p class="client-title">Fashion Blogger</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     
     <script src="script.js"></script>
 </body>

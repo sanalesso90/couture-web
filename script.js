@@ -151,4 +151,97 @@ document.addEventListener('DOMContentLoaded', function() {
     sliders.forEach(slider => {
         appearOnScroll.observe(slider);
     });
+
+    // Video Showcase functionality
+    const mainVideo = document.getElementById('main-video');
+    const playPauseBtn = document.querySelector('.play-pause-btn');
+    const videoTitle = document.getElementById('video-title');
+    const videoDescription = document.getElementById('video-description');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    let isPlaying = false;
+
+    function togglePlayPause() {
+        if (isPlaying) {
+            mainVideo.pause();
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        } else {
+            mainVideo.play();
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        isPlaying = !isPlaying;
+    }
+
+    playPauseBtn.addEventListener('click', togglePlayPause);
+
+    function changeVideo(videoSrc, title, description) {
+        mainVideo.src = videoSrc;
+        videoTitle.textContent = title;
+        videoDescription.textContent = description;
+        mainVideo.load();
+        if (isPlaying) {
+            mainVideo.play();
+        }
+    }
+
+    timelineItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const videoSrc = this.getAttribute('data-video');
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+
+            changeVideo(videoSrc, title, description);
+
+            timelineItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Intersection Observer for timeline items
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    timelineItems.forEach(item => timelineObserver.observe(item));
+
+    // What's New Swiper Carousel
+    const whatsNewSwiper = new Swiper('.whats-new-carousel', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+            delay: 4000, // 4 seconds
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.whats-new-nav',
+            clickable: true,
+            renderBullet: function (index, className) {
+                return '<span class="' + className + ' whats-new-nav-item"></span>';
+            },
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
+    });
+
+    // Add hover effect to pause autoplay for What's New carousel
+    const swiperContainer = document.querySelector('.whats-new-carousel');
+    swiperContainer.addEventListener('mouseenter', function() {
+        whatsNewSwiper.autoplay.stop();
+    });
+    swiperContainer.addEventListener('mouseleave', function() {
+        whatsNewSwiper.autoplay.start();
+    });
 });

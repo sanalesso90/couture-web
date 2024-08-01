@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haute Couture</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -153,7 +155,169 @@
             </div>
         </div>
     </section>
-    
+    <section class="video-showcase" id="video-showcase">
+        <div class="container">
+            <h2 class="section-title">Craftsmanship in Motion</h2>
+            <div class="video-container">
+                <div class="video-main">
+                    <div class="video-frame">
+                        <video id="main-video" class="main-video" loop muted playsinline>
+                            <source src="./video/video1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <div class="play-pause-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 id="video-title">The Art of Haute Couture</h3>
+                        <p id="video-description">Witness the meticulous craftsmanship behind our latest collection.</p>
+                    </div>
+                </div>
+                <div class="video-timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-items">
+                        <div class="timeline-item active" data-video="./video/video1.mp4" data-title="The Art of Haute Couture" data-description="Witness the meticulous craftsmanship behind our latest collection.">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <img src="./img/group.jpg" alt="Crafting Details">
+                                <h4>Crafting Details</h4>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-video="./video/video2.mp4" data-title="The Thread of Creation" data-description="Where creativity meets skill - the beginning of every masterpiece.">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <img src="./img/adsd.jpg" alt="Threading Artistry">
+                                <h4>Threading Artistry</h4>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-video="./video/video3.mp4" data-title="Hands of a Master" data-description="Decades of experience guide every movement, creating wearable art.">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <img src="./img/model sun glasse.jpg" alt="Meticulous Stitching">
+                                <h4>Meticulous Stitching</h4>
+                            </div>
+                        </div>
+                        <div class="timeline-item" data-video="./video/video4.mp4" data-title="Where Magic Happens" data-description="Step into our atelier, where dreams are woven into reality.">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <img src="./img/hero img 1.jpg" alt="Workshop Magic">
+                                <h4>Workshop Magic</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="whats-new" id="whats-new">
+        <div class="container">
+            <h2 class="section-title">What's New</h2>
+            <div class="whats-new-carousel">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/model 2.png" alt="Relax Time Open Now">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Open Now: Relax Time</h3>
+                                <p>Experience ultimate relaxation at our new massage & spa.</p>
+                                <a href="#" class="whats-new-link">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/model 1.png" alt="Jewellista Silom Complex">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Jewellista Silom Complex</h3>
+                                <p>Discover exquisite jewelry at our newest boutique.</p>
+                                <a href="#" class="whats-new-link">Explore More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/model 3.png" alt="Summer Bloom Market">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Summer Bloom Market</h3>
+                                <p>Join us for a vibrant market experience.</p>
+                                <a href="#" class="whats-new-link">Visit Market</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/testimonial5.jpg" alt="Autumn Collection Preview">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Autumn Collection Preview</h3>
+                                <p>Get a sneak peek at our upcoming autumn designs.</p>
+                                <a href="#" class="whats-new-link">Preview Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/model 5.jpg" alt="Sustainable Fashion Initiative">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Sustainable Fashion Initiative</h3>
+                                <p>Learn about our commitment to eco-friendly fashion.</p>
+                                <a href="#" class="whats-new-link">Discover More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/6.jpg" alt="Fashion Week Highlights">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Fashion Week Highlights</h3>
+                                <p>Relive the best moments from our latest runway show.</p>
+                                <a href="#" class="whats-new-link">Watch Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/44.jpg" alt="Fashion Week Highlights">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Fashion Week Highlights</h3>
+                                <p>Relive the best moments from our latest runway show.</p>
+                                <a href="#" class="whats-new-link">Watch Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide whats-new-slide">
+                        <div class="whats-new-content">
+                            <div class="whats-new-image">
+                                <img src="./img/testimonial6.jpg" alt="Fashion Week Highlights">
+                            </div>
+                            <div class="whats-new-text">
+                                <h3>Fashion Week Highlights</h3>
+                                <p>Relive the best moments from our latest runway show.</p>
+                                <a href="#" class="whats-new-link">Watch Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="whats-new-nav"></div>
+            </div>
+        </div>
+    </section>
     <script src="script.js"></script>
 </body>
 </html>

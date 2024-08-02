@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize GSAP and ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
     // Hero Carousel functionality
     const carouselItems = document.querySelectorAll('.carousel-item');
     const heroTitle = document.querySelector('.hero-content h1');
@@ -53,7 +56,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', handleParallax);
 
-    // Smooth scrolling with Lenis
+    // Helper function to create a smooth scroll animation
+    function smoothScroll(target, duration = 2) {
+        gsap.to(window, {
+            duration: duration,
+            scrollTo: target,
+            ease: "power4.inOut"
+        });
+    }
+
+    // Initialize Lenis for smooth scrolling
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -66,8 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
         infinite: false,
     });
 
+    // Integrate Lenis with GSAP
     function raf(time) {
         lenis.raf(time);
+        ScrollTrigger.update();
         requestAnimationFrame(raf);
     }
 
@@ -160,40 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                lenis.scrollTo(targetElement);
+                smoothScroll(targetElement);
             }
         });
-    });
-
-    // Intersection Observer for fade-in animations
-    const faders = document.querySelectorAll('.fade-in');
-    const sliders = document.querySelectorAll('.slide-in');
-
-    const appearOptions = {
-        threshold: 0,
-        rootMargin: "0px 0px -100px 0px"
-    };
-
-    const appearOnScroll = new IntersectionObserver(function(
-        entries,
-        appearOnScroll
-    ) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('appear');
-                appearOnScroll.unobserve(entry.target);
-            }
-        });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
-
-    sliders.forEach(slider => {
-        appearOnScroll.observe(slider);
     });
 
     // Video Showcase functionality
@@ -241,19 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Intersection Observer for timeline items
-    const timelineObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-            } else {
-                entry.target.classList.remove('in-view');
-            }
-        });
-    }, { threshold: 0.5 });
-
-    timelineItems.forEach(item => timelineObserver.observe(item));
-
     // What's New Swiper Carousel
     const whatsNewSwiper = new Swiper('.whats-new-carousel', {
         slidesPerView: 1,
@@ -290,44 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Fashion Fusion Gallery functionality
-    const whatsNewSection = document.querySelector('.whats-new');
-    const fashionFusionGallery = document.querySelector('.fashion-fusion-gallery');
     const galleryItems = document.querySelectorAll('.gallery-item');
     const galleryOverlay = document.querySelector('.gallery-overlay');
     const overlayContent = document.querySelector('.overlay-content');
     const closeOverlay = document.querySelector('.close-overlay');
-
-    // Set initial styles for the Fashion Fusion Gallery
-    fashionFusionGallery.style.transform = 'translateY(100%)';
-    fashionFusionGallery.style.transition = 'transform 0.5s ease-out';
-
-    // Reveal effect
-    function revealGallery() {
-        const whatsNewBottom = whatsNewSection.getBoundingClientRect().bottom;
-        const windowHeight = window.innerHeight;
-
-        if (whatsNewBottom < windowHeight) {
-            const translateY = Math.max(0, 100 - (windowHeight - whatsNewBottom) / 2);
-            fashionFusionGallery.style.transform = `translateY(${translateY}%)`;
-        }
-    }
-
-    // Throttle function to limit the frequency of function calls
-    function throttle(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        }
-    }
-
-    // Add scroll event listener with throttling
-    window.addEventListener('scroll', throttle(revealGallery, 50));
 
     // Gallery item click event
     galleryItems.forEach(item => {
@@ -361,22 +297,130 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add animation to gallery items
-    const galleryAppearOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -100px 0px"
-    };
+    // GSAP ScrollTrigger Animations
 
-    const galleryAppearOnScroll = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('appear');
-            observer.unobserve(entry.target);
+    // Hero Section Animation
+    gsap.to('.hero-content', {
+        opacity: 0,
+        y: -50,
+        scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+        }
+    });
+
+    // Featured Collections Animation (updated)
+    gsap.from('.collection-item', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.2, // This creates the one-by-one effect
+        scrollTrigger: {
+            trigger: '.collections-grid',
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+        }
+    });
+
+    // Virtual Try-On Section Animation
+    gsap.from('.model-container', {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+            trigger: '.virtual-try-on',
+            start: 'top center',
+            toggleActions: 'play none none reverse'
+        }
+    });
+
+    gsap.from('.controls-container', {
+        x: 100,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+            trigger: '.virtual-try-on',
+            start: 'top center',
+            toggleActions: 'play none none reverse'
+        }
+    });
+
+    // Testimonials Animation (updated)
+    gsap.from('.testimonial-card', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.2, // This creates the one-by-one effect
+        scrollTrigger: {
+            trigger: '.testimonial-grid',
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+        }
+    });
+
+    // Video Showcase Animation
+    gsap.from('.video-main', {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+            trigger: '.video-showcase',
+            start: 'top center',
+            toggleActions: 'play none none reverse'
+        }
+    });
+
+    gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+        gsap.from(item, {
+            opacity: 0,
+            x: index % 2 === 0 ? -50 : 50,
+            duration: 1,
+            scrollTrigger: {
+                trigger: item,
+                start: 'top bottom-=50',
+                toggleActions: 'play none none reverse'
+            }
         });
-    }, galleryAppearOptions);
+    });
 
-    galleryItems.forEach(item => {
-        item.classList.add('fade-in');
-        galleryAppearOnScroll.observe(item);
+        // What's New Section Animation (updated)
+        gsap.from('.whats-new-slide', {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            stagger: 0.2, // This creates the one-by-one effect
+            scrollTrigger: {
+                trigger: '.whats-new-carousel',
+                start: 'top bottom-=100',
+                toggleActions: 'play none none reverse'
+            }
+        });
+    
+
+    // Fashion Fusion Gallery Animation (updated)
+    gsap.from('.gallery-item', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.2, // This creates the one-by-one effect
+        scrollTrigger: {
+            trigger: '.gallery-grid',
+            start: 'top bottom-=100',
+            toggleActions: 'play none none reverse'
+        }
+    });
+
+    // Footer Animation
+    gsap.from('.site-footer', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        scrollTrigger: {
+            trigger: '.site-footer',
+            start: 'top bottom',
+            toggleActions: 'play none none reverse'
+        }
     });
 });

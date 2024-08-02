@@ -2559,7 +2559,7 @@ nav:hover {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 380px) {
     .footer-column {
         flex-basis: 100%;
     }

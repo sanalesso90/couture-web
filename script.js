@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Carousel functionality
+    // Hero Carousel functionality
     const carouselItems = document.querySelectorAll('.carousel-item');
+    const heroTitle = document.querySelector('.hero-content h1');
+    const heroSubtitle = document.querySelector('.hero-content p');
     let currentItem = 0;
     let isTransitioning = false;
 
@@ -20,6 +22,18 @@ document.addEventListener('DOMContentLoaded', function() {
             next.classList.add('active');
             next.classList.remove('next');
             
+            // Update hero content
+            heroTitle.textContent = next.dataset.title;
+            heroSubtitle.textContent = next.dataset.subtitle;
+
+            // Fade in new text
+            heroTitle.style.opacity = 0;
+            heroSubtitle.style.opacity = 0;
+            setTimeout(() => {
+                heroTitle.style.opacity = 1;
+                heroSubtitle.style.opacity = 1;
+            }, 50);
+
             setTimeout(() => {
                 isTransitioning = false;
             }, 50);
@@ -85,10 +99,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const modelImage = document.querySelector('.model-image');
     const garmentOverlay = document.querySelector('.garment-overlay');
     const designOptions = document.querySelectorAll('.design-option');
+    const designName = document.querySelector('.info .name');
+    const designDescription = document.querySelector('.info .job');
+
+    const designs = {
+        design1: {
+            name: "Ethereal Elegance",
+            description: "Haute Couture Gown",
+            image: "./img/1.jpg"
+        },
+        design2: {
+            name: "Noir Mystique",
+            description: "Avant-Garde Evening Wear",
+            image: "./img/upscale.jpg"
+        },
+        design3: {
+            name: "Floral Reverie",
+            description: "Enchanting Garden-Inspired Dress",
+            image: "./img/h3.jpg"
+        },
+        design4: {
+            name: "Avant-Garde Fusion",
+            description: "Futuristic Couture Ensemble",
+            image: "./img/New folder/design1.jpg"
+        }
+    };
 
     designOptions.forEach(option => {
         option.addEventListener('click', function() {
-            const designImage = this.querySelector('img').src;
+            const designId = this.getAttribute('data-design');
+            const design = designs[designId];
             
             // Animate the model image
             modelImage.style.transform = 'scale(1.05)';
@@ -99,9 +139,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Change the garment overlay
             garmentOverlay.style.opacity = '0';
             setTimeout(() => {
-                garmentOverlay.style.backgroundImage = `url(${designImage})`;
+                garmentOverlay.style.backgroundImage = `url(${design.image})`;
                 garmentOverlay.style.opacity = '1';
             }, 250);
+
+            // Update design info
+            designName.textContent = design.name;
+            designDescription.textContent = design.description;
 
             // Highlight the selected design
             designOptions.forEach(opt => opt.classList.remove('selected'));
@@ -243,5 +287,96 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     swiperContainer.addEventListener('mouseleave', function() {
         whatsNewSwiper.autoplay.start();
+    });
+
+    // Fashion Fusion Gallery functionality
+    const whatsNewSection = document.querySelector('.whats-new');
+    const fashionFusionGallery = document.querySelector('.fashion-fusion-gallery');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryOverlay = document.querySelector('.gallery-overlay');
+    const overlayContent = document.querySelector('.overlay-content');
+    const closeOverlay = document.querySelector('.close-overlay');
+
+    // Set initial styles for the Fashion Fusion Gallery
+    fashionFusionGallery.style.transform = 'translateY(100%)';
+    fashionFusionGallery.style.transition = 'transform 0.5s ease-out';
+
+    // Reveal effect
+    function revealGallery() {
+        const whatsNewBottom = whatsNewSection.getBoundingClientRect().bottom;
+        const windowHeight = window.innerHeight;
+
+        if (whatsNewBottom < windowHeight) {
+            const translateY = Math.max(0, 100 - (windowHeight - whatsNewBottom) / 2);
+            fashionFusionGallery.style.transform = `translateY(${translateY}%)`;
+        }
+    }
+
+    // Throttle function to limit the frequency of function calls
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        }
+    }
+
+    // Add scroll event listener with throttling
+    window.addEventListener('scroll', throttle(revealGallery, 50));
+
+    // Gallery item click event
+    galleryItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            if (e.target.classList.contains('item-link')) {
+                e.preventDefault();
+                const title = item.querySelector('h3').textContent;
+                const description = item.querySelector('p').textContent;
+                const image = item.querySelector('img').src;
+                const tags = Array.from(item.querySelectorAll('.item-tags span')).map(tag => tag.textContent);
+
+                overlayContent.innerHTML = `
+                    <h3>${title}</h3>
+                    <img src="${image}" alt="${title}" style="max-width: 100%; border-radius: 10px; margin-bottom: 1rem;">
+                    <p>${description}</p>
+                    <div class="overlay-tags">${tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+                    <button class="close-overlay">Close</button>
+                `;
+
+                galleryOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Close overlay
+    galleryOverlay.addEventListener('click', (e) => {
+        if (e.target === galleryOverlay || e.target.classList.contains('close-overlay')) {
+            galleryOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Add animation to gallery items
+    const galleryAppearOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -100px 0px"
+    };
+
+    const galleryAppearOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('appear');
+            observer.unobserve(entry.target);
+        });
+    }, galleryAppearOptions);
+
+    galleryItems.forEach(item => {
+        item.classList.add('fade-in');
+        galleryAppearOnScroll.observe(item);
     });
 });
